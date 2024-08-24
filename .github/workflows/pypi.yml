@@ -1,0 +1,36 @@
+name: Publish to PyPi
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  pypi:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+  
+    - uses: actions/setup-python@v2
+      with:
+        python-version: "3.11"
+  
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        python3 -m pip install build twine
+        python3 -m pip install -r requirements.txt
+
+    - name: Build Function LLM
+      run: python3 -m build
+
+    - name: Publish to PyPi
+      run: python3 -m twine upload dist/*
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+
+    - uses: actions/upload-artifact@v4
+      with:
+          name: Wheels
+          path: dist/
