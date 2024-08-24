@@ -1,0 +1,45 @@
+# 
+#   Function
+#   Copyright © 2024 NatML Inc. All Rights Reserved.
+#
+
+[project]
+name = "fxn-llm"
+dynamic = ["version"]
+description = "Use local LLMs in your Python apps, with GPU acceleration and zero dependencies."
+readme = "README.md"
+dependencies = ["fxn"]
+requires-python = ">=3.10"
+authors = [ { name = "NatML Inc.", email = "hi@fxn.ai" } ]
+license = { file = "LICENSE" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+    "Topic :: Software Development :: Libraries",
+]
+
+[project.urls]
+Homepage = "https://fxn.ai"
+Documentation = "https://docs.fxn.ai"
+Source = "https://github.com/fxnai/fxn-llm"
+Changelog = "https://github.com/fxnai/fxn-llm/blob/main/Changelog.md"
+
+[project.optional-dependencies]
+openai = ["openai"]
+anthropic = ["anthropic"]
+
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+include = ["fxn_llm", "fxn_llm*"]
+namespaces = false
+
+[tool.setuptools.dynamic]
+version = { attr = "fxn_llm.version.__version__" }

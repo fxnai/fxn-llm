@@ -1,0 +1,32 @@
+# Python
+__pycache__
+.pytest_cache
+build/
+dist/
+*.egg
+*.egg-info/
+
+# Libs
+fxn/**/*.dll
+fxn/**/*.dylib
+fxn/**/*.so
+
+# IDE
+.vscode
+.vs
+.idea
+
+# Env
+*.env
+!.env.example
+
+# Images
+*.png
+*.jpg
+*.jpeg
+*.gif
+!test/media/**/*.jpg
+!test/media/**/*.jpeg
+
+# Misc
+.DS_Store
