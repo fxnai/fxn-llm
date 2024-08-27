@@ -7,6 +7,9 @@
 
 Use local LLMs in your Python apps, with GPU acceleration and zero dependencies. This package is designed to patch `OpenAI` and `Anthropic` clients for running inference locally, using predictors hosted on [Function](https://fxn.ai/explore).
 
+> [!TIP]
+> We offer a similar package for use in the browser and Node.js. Check out [fxn-llm-js](https://github.com/fxnai/fxn-llm-js).
+
 > [!IMPORTANT]
 > This package is still a work-in-progress, so the API could change drastically between **all** releases.
 
