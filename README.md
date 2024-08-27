@@ -17,11 +17,11 @@ Function is distributed on PyPi. To install, open a terminal and run the followi
 $ pip install --upgrade fxn-llm
 ```
 
-> [!IMPORTANT]
-> Make sure to create an access key by signing onto [Function](https://fxn.ai/settings/developer). You'll need it to fetch the predictor at runtime.
-
 > [!NOTE]
 > Function LLM requires Python 3.10+
+
+> [!IMPORTANT]
+> Make sure to create an access key by signing onto [Function](https://fxn.ai/settings/developer). You'll need it to fetch the predictor at runtime.
 
 ## Using the OpenAI Client Locally
 To run text generation and embedding models locally using the OpenAI client, patch your `OpenAI` instance with the `locally` function:
