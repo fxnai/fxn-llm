@@ -6,6 +6,7 @@
 from fxn import Function
 from numpy import float32
 from numpy.typing import NDArray
+from re import match
 from types import MethodType
 from typing import List, Literal, Optional, TypeVar
 
@@ -36,21 +37,29 @@ def locally (
     if provider == "openai":
         from openai.types import CreateEmbeddingResponse, Embedding
         from openai.types.create_embedding_response import Usage
-        def embeddings_create (
+        embeddings_create_openai = client.embeddings.create
+        def embeddings_create_fxn (
             self,
             *,
             input: str | List[str],
             model: str,
-            dimensions: Optional[int]=None,
-            encoding_format: Optional[Literal["float", "base64"]]=None,
             **kwargs
         ) -> CreateEmbeddingResponse:
-            encoding_format = encoding_format if encoding_format is not None else "float"
-            assert dimensions is None, "Explicit dimensionality is not yet supported"
-            assert encoding_format == "float", "Base64 encoding format is not yet supported"
+            # Check
+            if not match(r"^@[a-z0-9._-]+/[a-z0-9._-]+$", model):
+                return embeddings_create_openai(
+                    input=input,
+                    model=model,
+                    **kwargs
+                )
+            # Check inputs
+            assert kwargs.get("dimensions", None) is None, "Explicit dimensionality is not supported"
+            assert kwargs.get("encoding_format", "float") == "float", "Base64 encoding format is not yet supported"
+            # Predict
             input = [input] if isinstance(input, str) else input
             prediction = fxn.predictions.create(tag=model, inputs={ "input": input })
             embeddings: NDArray[float32] = prediction.results[0]
+            # Return
             return CreateEmbeddingResponse(
                 data=[Embedding(
                     embedding=data.tolist(),
@@ -61,7 +70,7 @@ def locally (
                 object="list",
                 usage=Usage(prompt_tokens=0, total_tokens=0)
             )
-        client.embeddings.create = MethodType(embeddings_create, client.embeddings)
+        client.embeddings.create = MethodType(embeddings_create_fxn, client.embeddings)
         return client
     elif provider == "anthropic":
         pass

@@ -48,29 +48,6 @@ embeddings = openai.embeddings.create(
 > [!WARNING]
 > Currently, only `openai.embeddings.create` is supported. Text generation is coming soon!
 
-## Using the Anthropic Client Locally
-To run text generation models locally using the Anthopic client, patch your `Anthropic` instance with the `locally` function and the following configuration:
-```py
-from anthropic import Anthropic
-from fxn_llm import locally
-
-# 💥 Create your Anthropic client
-anthropic = Anthropic()
-
-# 🔥 Make it local
-anthropic = locally(openai, provider="anthropic")
-
-# 🚀 Chat
-message = anthropic.messages.create(
-  model="@meta/llama-3.1-8b-quant",
-  messages=[{ "role": "user", "content": "Hello, Llama" }],
-  max_tokens=1024,
-)
-```
-
-> [!CAUTION]
-> Anthropic support is not functional. It is still a work-in-progress.
-
 ___
 
 ## Useful Links
